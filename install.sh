@@ -210,6 +210,8 @@ git config --global alias.st status
 git config --global pull.rebase true
 
 # Set google chrome theme
+
+mkdir -p ~/.config/google-chrome/Default
 cd ~/.config/google-chrome/Default
 jq '.extensions.theme += {"id": "user_color_theme_id", "system_theme": 0}' Preferences >tmp.json && mv tmp.json Preferences
 jq '.browser.theme.color_scheme = 2 | .browser.theme.color_variant = 1 | .browser.theme.user_color = 3094106' Preferences >tmp.json && mv tmp.json Preferences
