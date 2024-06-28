@@ -353,8 +353,6 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 sudo apt install -y gnome-shell-extension-manager pipx
 pipx install gnome-extensions-cli --system-site-packages
 pipx ensurepath
-sleep 2
-source ~/.bashrc
 
 # Turn off default Ubuntu extensions
 gnome-extensions disable tiling-assistant@ubuntu.com
@@ -362,11 +360,11 @@ gnome-extensions disable ubuntu-appindicators@ubuntu.com
 gnome-extensions disable ding@rastersoft.com
 
 # Install new extensions
-gext install tactile@lundal.io
-gext install just-perfection-desktop@just-perfection
-gext install blur-my-shell@aunetx
-gext install space-bar@luchrioh
-gext install undecorate@sun.wxg@gmail.com
+~/.local/bin/gext install tactile@lundal.io
+~/.local/bin/gext install just-perfection-desktop@just-perfection
+~/.local/bin/gext install blur-my-shell@aunetx
+~/.local/bin/gext install space-bar@luchrioh
+~/.local/bin/gext install undecorate@sun.wxg@gmail.com
 
 # Compile gsettings schemas in order to be able to set them
 sudo cp ~/.local/share/gnome-shell/extensions/tactile@lundal.io/schemas/org.gnome.shell.extensions.tactile.gschema.xml /usr/share/glib-2.0/schemas/
