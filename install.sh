@@ -11,15 +11,19 @@ gsettings set org.gnome.desktop.session idle-delay 0
 
 # Install easy apps
 sudo apt install -y \
-    gnome-tweak-tool fzf ripgrep bat eza zoxide plocate btop \
+    gnome-tweak-tool gnome-sushi fzf ripgrep bat eza zoxide plocate btop \
     apache2-utils fd-find vlc flameshot xournalpp \
     build-essential pkg-config autoconf bison rustc cargo clang \
     libssl-dev libreadline-dev zlib1g-dev libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev libjemalloc2 \
     libvips imagemagick libmagickwand-dev mupdf mupdf-tools \
-    redis-tools sqlite3 libsqlite3-0 libmysqlclient-dev
+    redis-tools sqlite3 libsqlite3-0 libmysqlclient-dev 
+    
 
 # Install pinta
 sudo snap install pinta
+
+# Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
 
 cd /tmp
 
@@ -235,6 +239,55 @@ MimeType=text/html;text/xml;application/xhtml_xml;
 StartupNotify=true
 EOF
 
+# Icon for btop
+wget --output-document="$HOME/.config/alacritty/btop.toml" https://raw.githubusercontent.com/basecamp/omakub/defaults/alacritty/btop.toml
+wget --output-document="$HOME/.local/share/applications/icons/Activity.png" https://raw.githubusercontent.com/basecamp/omakub/master/applications/icons/Activity.png
+cat <<EOF >~/.local/share/applications/Activity.desktop
+[Desktop Entry]
+Version=1.0
+Name=Activity
+Comment=System activity from btop
+Exec=alacritty --config-file /home/$USER/.config/alacritty/btop.toml -e btop
+Terminal=false
+Type=Application
+Icon=/home/$USER/.local/share/applications/icons/Activity.png
+Categories=GTK;
+StartupNotify=false
+EOF
+
+# Icon for fastfetch
+wget --output-document="$HOME/.config/alacritty/pane.toml" https://raw.githubusercontent.com/basecamp/omakub/defaults/alacritty/pane.toml
+wget --output-document="$HOME/.local/share/applications/icons/Ubuntu.png" https://raw.githubusercontent.com/basecamp/omakub/master/applications/icons/Ubuntu.png
+cat <<EOF >~/.local/share/applications/About.desktop
+[Desktop Entry]
+Version=1.0
+Name=About
+Comment=System information from Fastfetch
+Exec=alacritty --config-file /home/$USER/.config/alacritty/pane.toml -e bash -c 'fastfetch; read -n 1 -s'
+Terminal=false
+Type=Application
+Icon=/home/$USER/.local/share/applications/icons/Ubuntu.png
+Categories=GTK;
+StartupNotify=false
+EOF
+
+# Icon for Docker
+wget --output-document="$HOME/.local/share/applications/icons/Docker.png" https://raw.githubusercontent.com/basecamp/omakub/master/applications/icons/Docker.png
+cat <<EOF >~/.local/share/applications/Docker.desktop
+[Desktop Entry]
+Version=1.0
+Name=Docker
+Comment=Manage Docker containers with LazyDocker
+Exec=alacritty --config-file /home/$USER/.config/alacritty/pane.toml -e lazydocker
+Terminal=false
+Type=Application
+Icon=/home/$USER/.local/share/applications/icons/Docker.png
+Categories=GTK;
+StartupNotify=false
+EOF
+
+
+
 # Add some aliases 
 cat <<EOF >~/.bash_aliases
 # File system
@@ -430,12 +483,15 @@ apps=(
     "google-chrome.desktop"
     "Alacritty.desktop"
     "code.desktop"
+    "Docker.desktop"
     "WhatsApp.desktop"
     "spotify.desktop"
     "typora.desktop"
     "pinta_pinta.desktop"
     "com.github.xournalpp.xournalpp.desktop"
     "1password.desktop"
+    "Activity.desktop"
+    "About.desktop"
     "org.gnome.Settings.desktop"
     "org.gnome.Nautilus.desktop"
 )
