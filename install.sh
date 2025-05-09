@@ -1,15 +1,20 @@
 #!/bin/bash
 set -e
 
-
-echo '🔧 Atualizando sistema e instalando pacotes essenciais...'
-#!/bin/bash
-set -e
+# setar fonte
+# gnome extensions
+# terminal
 
 sudo apt update
 sudo apt upgrade -y
 
-sudo apt install -y zip curl unzip flameshot snapd git btop apache2-utils python3 gnome-tweaks gnome-shell-extensions dconf-editor fonts-jetbrains-mono
+ubuntu-report send no
+apt remove ubuntu-report -y
+apt remove apport apport-gtk -y
+sed -i 's/ENABLED=1/ENABLED=0/g' /etc/default/motd-news 2>/dev/null
+pro config set apt_news=false
+
+sudo apt install -y zip curl unzip flameshot snapd git btop apache2-utils python3 gnome-tweaks gnome-shell-extensions dconf-editor
 
 sudo snap install chromium vlc libreoffice bitwarden spotify pinta xournalpp typora ollama discord gimp
 sudo snap install sublime-text --classic
